@@ -11,6 +11,13 @@ import { SoruAgirlikModule } from './soru-agirlik/soru-agirlik.module';
 import { SinavModule } from './sinav/sinav.module';
 import { SinavDetayModule } from './sinav-detay/sinav-detay.module';
 import { HealthController } from './health.controller';
+import { Departman } from './departman/entities/departman.entity';
+import { Personel } from './personel/entities/personel.entity';
+import { Role } from './role/entities/role.entity';
+import { SinavDetay } from './sinav-detay/entities/sinav-detay.entity';
+import { Sinav } from './sinav/entities/sinav.entity';
+import { SoruAgirlik } from './soru-agirlik/entities/soru-agirlik.entity';
+import { Soru } from './sorular/entities/sorular.entity';
 // Auth modülünü sonra ekleyeceğiz
 // import { AuthModule } from './auth/auth.module'; 
 
@@ -25,13 +32,17 @@ import { HealthController } from './health.controller';
       host: process.env.DB_HOST,
       synchronize: true,
       database: process.env.DB_DATABASE,
-
-      // Şimdilik boş entity ekleyeceğim
-      // [Personel, Departman, Rol, Soru, SoruAgirlik, Sinav, SinavDetay] olur
-      entities: [],
+      entities: [
+        Departman,
+        Role,
+        Soru,
+        Personel,
+        SoruAgirlik,
+        Sinav,
+        SinavDetay,
+      ],
     }),
-
-    // --- YENİ MODÜLLERİMİZ ---
+    
     PersonelModule,
     DepartmanModule,
     RoleModule,
@@ -39,7 +50,7 @@ import { HealthController } from './health.controller';
     SoruAgirlikModule,
     SinavModule,
     SinavDetayModule,
-    // Auth modülünü temizleyip sonra tekrar ekleyeceğiz
+    // Auth modülünü temizleyip sonra tekrar eklicem
     // AuthModule,
   ],
   // şimdilk AppController ve HealthController kalsın
