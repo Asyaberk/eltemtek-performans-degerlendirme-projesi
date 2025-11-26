@@ -32,7 +32,7 @@ export class Personel {
   @ManyToOne(() => Departman, (departman) => departman.personels, {
     nullable: false, // Her personelin bir departmanı olmalı 
   })
-  @JoinColumn({ name: 'dept_id', referencedColumnName: 'depo_id' }) 
+  @JoinColumn({ name: 'dept_id', referencedColumnName: 'dept_id' }) 
   departman: Departman;
   @Column({ name: 'dept_id' })
   dept_id: number;

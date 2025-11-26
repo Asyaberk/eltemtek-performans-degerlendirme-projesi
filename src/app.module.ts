@@ -31,6 +31,7 @@ import { Soru } from './sorular/entities/sorular.entity';
       password: process.env.DB_PASSWORD,
       host: process.env.DB_HOST,
       synchronize: true,
+      autoLoadEntities: true,
       database: process.env.DB_DATABASE,
       entities: [
         Departman,
@@ -42,7 +43,7 @@ import { Soru } from './sorular/entities/sorular.entity';
         SinavDetay,
       ],
     }),
-    
+
     PersonelModule,
     DepartmanModule,
     RoleModule,
