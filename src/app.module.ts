@@ -20,6 +20,8 @@ import { SoruAgirlik } from './soru-agirlik/entities/soru-agirlik.entity';
 import { Soru } from './sorular/entities/sorular.entity';
 // Auth modülünü sonra ekleyeceğiz
 // import { AuthModule } from './auth/auth.module'; 
+import { SinavTuruModule } from './sinav-turu/sinav-turu.module';
+import { SinavTuru } from './sinav-turu/entities/sinav-turu.entity';
 
 @Module({
   imports: [
@@ -41,6 +43,7 @@ import { Soru } from './sorular/entities/sorular.entity';
         SoruAgirlik,
         Sinav,
         SinavDetay,
+        SinavTuru
       ],
     }),
 
@@ -51,6 +54,7 @@ import { Soru } from './sorular/entities/sorular.entity';
     SoruAgirlikModule,
     SinavModule,
     SinavDetayModule,
+    SinavTuruModule,
     // Auth modülünü temizleyip sonra tekrar eklicem
     // AuthModule,
   ],

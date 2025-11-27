@@ -22,12 +22,12 @@ export class SinavDetay {
   // --- SINAV ---
   @ManyToOne(() => Sinav, (sinav) => sinav.detaylar, {
     nullable: false,
-    onDelete: 'CASCADE', 
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'sinav_id' })
   sinav: Sinav;
   @Column({ name: 'sinav_id' })
-  sinav_id: number; 
+  sinav_id: number;
 
   // --- SORULAR ---
   @ManyToOne(() => Soru, (soru) => soru.sinav_detaylari, {
@@ -38,4 +38,7 @@ export class SinavDetay {
 
   @Column({ name: 'soru_id' })
   soru_id: number;
+
+  @Column({ name: 'yorum', length: 1000 })
+  yorum: string;
 }

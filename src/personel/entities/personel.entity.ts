@@ -14,14 +14,15 @@ import { Sinav } from 'src/sinav/entities/sinav.entity';
 @Entity('personel')
 export class Personel {
   @PrimaryGeneratedColumn()
-  id: number; 
+  id: number;
 
   @Index({ unique: true })
   @Column({ name: 'sicil_no', length: 50 })
-  sicil_no: string; 
+  sicil_no: string;
 
-  @Column({ name: 'ad', length: 150 })
+  @Column({ name: 'name', length: 150 })
   name: string; // Adı Soyadı (eski first_last_name)
+
 
   // Password, Auth modülünü kurarken eklenebilir ama şimdilik dursun
   // @Exclude()
@@ -30,16 +31,16 @@ export class Personel {
 
   // --- DEPARTMAN  ---
   @ManyToOne(() => Departman, (departman) => departman.personels, {
-    nullable: false, // Her personelin bir departmanı olmalı 
+    nullable: false, // Her personelin bir departmanı olmalı
   })
-  @JoinColumn({ name: 'dept_id', referencedColumnName: 'dept_id' }) 
+  @JoinColumn({ name: 'dept_id', referencedColumnName: 'dept_id' })
   departman: Departman;
   @Column({ name: 'dept_id' })
   dept_id: number;
 
   // --- ROLE  ---
   @ManyToOne(() => Role, (role) => role.personels, {
-    nullable: false, 
+    nullable: false,
   })
   @JoinColumn({ name: 'role_id', referencedColumnName: 'role_id' })
   role: Role;
