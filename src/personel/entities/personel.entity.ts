@@ -10,19 +10,22 @@ import {
 import { Departman } from '../../departman/entities/departman.entity';
 import { Role } from '../../role/entities/role.entity';
 import { Sinav } from 'src/sinav/entities/sinav.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('personel')
 export class Personel {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: '123456' })
   @Index({ unique: true })
   @Column({ name: 'sicil_no', length: 50 })
   sicil_no: string;
 
+  @ApiProperty({ example: 'Melisa Güneş' })
   @Column({ name: 'name', length: 150 })
   name: string; // Adı Soyadı (eski first_last_name)
-
 
   // Password, Auth modülünü kurarken eklenebilir ama şimdilik dursun
   // @Exclude()
@@ -30,6 +33,7 @@ export class Personel {
   // password?: string;
 
   // --- DEPARTMAN  ---
+  @ApiProperty()
   @ManyToOne(() => Departman, (departman) => departman.personels, {
     nullable: false, // Her personelin bir departmanı olmalı
   })
@@ -39,6 +43,7 @@ export class Personel {
   dept_id: number;
 
   // --- ROLE  ---
+  @ApiProperty()
   @ManyToOne(() => Role, (role) => role.personels, {
     nullable: false,
   })

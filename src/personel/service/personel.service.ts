@@ -1,4 +1,82 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { PersonelRepository } from '../repository/personel.repository';
+import { DepartmanRepository } from 'src/departman/repository/departman.repository';
+import { RoleRepository } from 'src/role/repository/role.repository';
+import { Personel } from '../entities/personel.entity';
+import { CreatePersonelDto } from '../dtos/createPersonel.dto';
+import { UpdatePersonelDto } from '../dtos/updatePersonel.dto';
 
 @Injectable()
-export class PersonelService {}
+export class PersonelService {
+  constructor(
+    private readonly personelRepository: PersonelRepository,
+    private readonly departmanRepository: DepartmanRepository, 
+    private readonly roleRepository: RoleRepository,
+  ) {}
+
+  async findOne(id: number): Promise<Personel> {
+    const personel = await this.personelRepository.findById(id);
+    
+    if (!personel) {
+      throw new NotFoundException(`Personel (ID: ${id}) bulunamadı.`);
+    }
+    return personel;
+  }
+  
+  // --- Yardımcı Fonksiyon: İlişki Varlık Kontrolü ---
+  private async checkForeignKeys(dept_id: number, role_id: number): Promise<void> {
+    // 1. Departman kontrolü
+    const departman = await this.departmanRepository.findById(dept_id);
+    if (!departman) {
+      throw new NotFoundException(`Departman (ID: ${dept_id}) bulunamadı.`);
+    }
+
+    // 2. Rol kontrolü
+    const rol = await this.roleRepository.findById(role_id);
+    if (!rol) {
+      throw new NotFoundException(`Rol (ID: ${role_id}) bulunamadı.`);
+    }
+  }
+
+  async findAll(): Promise<Personel[]> {
+    return this.personelRepository.findAll();
+  }
+  
+  async create(createPersonelDto: CreatePersonelDto): Promise<Personel> {
+    const mevcutPersonel = await this.personelRepository.findBySicilNo(createPersonelDto.sicil_no);
+    if (mevcutPersonel) {
+      throw new ConflictException(`Sicil No '${createPersonelDto.sicil_no}' zaten mevcut.`);
+    }
+    await this.checkForeignKeys(createPersonelDto.dept_id, createPersonelDto.role_id);
+
+    return this.personelRepository.create(createPersonelDto);
+  }
+
+  async update(id: number, updatePersonelDto: UpdatePersonelDto): Promise<Personel> {
+    const personel = await this.findOne(id); 
+    
+    if (updatePersonelDto.dept_id || updatePersonelDto.role_id) {
+        await this.checkForeignKeys(
+            updatePersonelDto.dept_id || personel.dept_id,
+            updatePersonelDto.role_id || personel.role_id,
+        );
+    }
+    Object.assign(personel, updatePersonelDto);
+
+    return this.personelRepository.update(personel);
+  }
+
+  async remove(id: number): Promise<{ message: string }> {
+    await this.findOne(id);
+    
+    const result = await this.personelRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Personel (ID: ${id}) bulunamadı.`);
+    }
+    
+    return {
+      message: `Personel (ID: ${id}) başarıyla silindi.`,
+    };
+  }
+}
