@@ -8,15 +8,21 @@ import {
 } from 'typeorm';
 import { Role } from 'src/role/entities/role.entity';
 import { Soru } from 'src/sorular/entities/sorular.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 // Bir Role ait aynı Sorunun birden fazla ağırlığı olamaz
 @Entity('soru_agirlik')
 @Unique(['role_id', 'soru_id'])
 export class SoruAgirlik {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'decimal', precision: 5, scale: 4 })
+  @ApiProperty({
+    example: 0.5,
+    description: 'Soru ağırlığı değeri',
+  })
   // Ağırlık değeri (weight) (0-2)
   agirlik: number;
 
