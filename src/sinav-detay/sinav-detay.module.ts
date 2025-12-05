@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { SinavDetayController } from './controller/sinav-detay.controller';
 import { SinavDetayService } from './service/sinav-detay.service';
 import { SinavDetay } from './entities/sinav-detay.entity';
@@ -8,7 +8,7 @@ import { SinavModule } from 'src/sinav/sinav.module';
 import { SinavDetayRepository } from './repository/sinav-detay.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([SinavDetay]), SorularModule, SinavModule],
+  imports: [TypeOrmModule.forFeature([SinavDetay]), SorularModule, forwardRef(() => SinavModule)],
   controllers: [SinavDetayController],
   providers: [SinavDetayService, SinavDetayRepository],
   exports: [SinavDetayService, SinavDetayRepository],

@@ -196,4 +196,53 @@ export class SinavController {
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     await this.sinavService.remove(id);
   }
+
+  ////////////////
+  //GET /sinav/:id/score
+  //Belirli bir sınavın performans puanını hesaplar ve döndürür
+
+  @Get(':id/score')
+  @ApiOperation({
+    summary: 'Sınavın performans skorunu hesapla',
+    description:
+      'Bir sınavın detaylarındaki (puan × ağırlık) değerlerini toplayarak toplam performans skorunu hesaplar. Bu işlem sınav detayları, personelin rolü ve her bir sorunun ağırlığına göre yapılır.',
+  })
+  @ApiParam({
+    name: 'id',
+    example: 15,
+    description: 'Skoru hesaplanacak sınavın ID değeri',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Sınav skoru başarıyla hesaplandı',
+    schema: {
+      type: 'object',
+      properties: {
+        sinav_id: {
+          type: 'number',
+          example: 15,
+          description: 'Sınav ID',
+        },
+        skor: {
+          type: 'number',
+          example: 87.5,
+          description: 'Sınav için hesaplanan toplam performans skoru',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Sınav bulunamadı veya detayları yok',
+  })
+  async calculateScore(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<{ sinav_id: number; skor: number }> {
+    const skor = await this.sinavService.calculatePerformanceScore(id);
+
+    return {
+      sinav_id: id,
+      skor: skor,
+    };
+  }
 }
