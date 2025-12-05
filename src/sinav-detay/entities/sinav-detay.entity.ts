@@ -8,16 +8,26 @@ import {
 } from 'typeorm';
 import { Sinav } from '../../sinav/entities/sinav.entity';
 import { Soru } from 'src/sorular/entities/sorular.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('sinav_detay')
 @Unique(['sinav_id', 'soru_id'])
 export class SinavDetay {
+  @ApiProperty({ example: 1, description: 'Detay ID' })
   @PrimaryGeneratedColumn()
   id: number;
 
   // Soruya verilen puan (1-4)
+  @ApiProperty({ example: 3, description: 'Verilen puan (1-4)' })
   @Column()
   puan: number;
+
+  @ApiProperty({
+    example: 'Bazı eksiklikler mevcut fakat gelişmeye açık.',
+    description: 'Soruya verilen yorum',
+  })
+  @Column({ name: 'yorum', length: 1000 })
+  yorum: string;
 
   // --- SINAV ---
   @ManyToOne(() => Sinav, (sinav) => sinav.detaylar, {
@@ -35,10 +45,6 @@ export class SinavDetay {
   })
   @JoinColumn({ name: 'soru_id' })
   soru: Soru;
-
   @Column({ name: 'soru_id' })
   soru_id: number;
-
-  @Column({ name: 'yorum', length: 1000 })
-  yorum: string;
 }
