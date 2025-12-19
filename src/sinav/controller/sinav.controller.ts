@@ -1,10 +1,16 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Query, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Query, Put, UseGuards } from '@nestjs/common';
 import { SinavService } from '../service/sinav.service';
 import { Sinav } from '../entities/sinav.entity';
 import { CreateSinavDto } from '../dtos/createSinav.dto';
 import { UpdateSinavDto } from '../dtos/updateSinav.dto';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @ApiTags('Sınav')
 @Controller('sinav')
 export class SinavController {

@@ -1,10 +1,16 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put, UseGuards } from '@nestjs/common';
 import { SorularService } from '../service/sorular.service';
 import { Soru } from '../entities/sorular.entity';
 import { CreateSoruDto } from '../dtos/createSoru.dto';
 import { UpdateSoruDto } from '../dtos/updateSoru.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @Controller('sorular')
 export class SorularController {
     constructor(private readonly sorularService: SorularService) { }

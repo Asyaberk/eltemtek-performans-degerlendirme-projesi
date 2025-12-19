@@ -18,10 +18,9 @@ import { SinavDetay } from './sinav-detay/entities/sinav-detay.entity';
 import { Sinav } from './sinav/entities/sinav.entity';
 import { SoruAgirlik } from './soru-agirlik/entities/soru-agirlik.entity';
 import { Soru } from './sorular/entities/sorular.entity';
-// Auth modülünü sonra ekleyeceğiz
-// import { AuthModule } from './auth/auth.module'; 
 import { SinavTuruModule } from './sinav-turu/sinav-turu.module';
 import { SinavTuru } from './sinav-turu/entities/sinav-turu.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -55,8 +54,7 @@ import { SinavTuru } from './sinav-turu/entities/sinav-turu.entity';
     SinavModule,
     SinavDetayModule,
     SinavTuruModule,
-    // Auth modülünü temizleyip sonra tekrar eklicem
-    // AuthModule,
+    AuthModule,
   ],
   // şimdilk AppController ve HealthController kalsın
   controllers: [AppController, HealthController],

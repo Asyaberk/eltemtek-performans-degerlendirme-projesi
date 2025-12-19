@@ -10,8 +10,8 @@ async function bootstrap() {
 
   //for swagger
   const config = new DocumentBuilder()
-    .setTitle('My Nestjs User Project')
-    .setDescription('This is the API documentation of my internship project!')
+    .setTitle('Eltemtek Perfomans Değerlendirme Sistemi')
+    .setDescription('This is the API documentation of my internship project.')
     .setVersion('1.0.0')
     .build()
   const document = SwaggerModule.createDocument(app, config);

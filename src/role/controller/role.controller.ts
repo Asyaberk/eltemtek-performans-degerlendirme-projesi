@@ -8,13 +8,19 @@ import {
   Delete,
   HttpCode,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { RoleService } from '../service/role.service';
 import { Role } from '../entities/role.entity';
 import { CreateRoleDto } from '../dtos/createRole.dto';
 import { UpdateRoleDto } from '../dtos/updateRole.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
 
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @Controller('role')
 export class RoleController {
     constructor(private readonly roleService: RoleService) { }

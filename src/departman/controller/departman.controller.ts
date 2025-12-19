@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { DepartmanService } from '../service/departman.service';
 import { Departman } from '../entities/departman.entity';
@@ -15,6 +16,12 @@ import { CreateDepartmanDto } from '../dtos/createDepartman.dto';
 import { UpdateDepartmanDto } from '../dtos/updateDepartman.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @Controller('departman')
 export class DepartmanController {
     constructor(private readonly departmanService: DepartmanService) { }

@@ -1,10 +1,16 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put, UseGuards } from '@nestjs/common';
 import { SinavDetayService } from '../service/sinav-detay.service';
 import { SinavDetay } from '../entities/sinav-detay.entity';
 import { CreateSinavDetayDto } from '../dtos/createSinavDetay.dto';
 import { UpdateSinavDetayDto } from '../dtos/updateSinavDetay.dto';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @ApiTags('Sınav Detay')
 @Controller('sinav-detay')
 export class SinavDetayController {
@@ -79,7 +85,7 @@ export class SinavDetayController {
   @Get(':id')
   @ApiOperation({ summary: 'ID’ye göre sınav detayı getir' })
   @ApiParam({
-    name: 'id',
+    name: 'id', 
     example: 5,
     description: 'Detay ID',
   })

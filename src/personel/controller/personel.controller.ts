@@ -1,10 +1,18 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put, UseGuards, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
 import { PersonelService } from '../service/personel.service';
 import { Personel } from '../entities/personel.entity';
 import { CreatePersonelDto } from '../dtos/createPersonel.dto';
 import { UpdatePersonelDto } from '../dtos/updatePersonel.dto';
-import { ApiOperation, ApiBody, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiBody, ApiResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
 
+//We add these because the password field is automatically removed from the response.
+@UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
+@ApiTags('Personel')
 @Controller('personel')
 export class PersonelController {
   constructor(private readonly personelService: PersonelService) {}

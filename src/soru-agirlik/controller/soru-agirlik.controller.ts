@@ -1,10 +1,16 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put, UseGuards } from '@nestjs/common';
 import { SoruAgirlikService } from '../service/soru-agirlik.service';
 import { SoruAgirlik } from '../entities/soru-agirlik.entity';
 import { CreateSoruAgirlikDto } from '../dtos/createSoruAgirlik.dto';
 import { UpdateSoruAgirlikDto } from '../dtos/updateSoruAgirlik.dto';
 import { ApiOperation, ApiBody, ApiResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @ApiTags('Soru Ağırlık')
 @Controller('soru-agirlik')
 export class SoruAgirlikController {

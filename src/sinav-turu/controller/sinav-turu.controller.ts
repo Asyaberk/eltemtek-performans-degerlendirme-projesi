@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -21,6 +22,12 @@ import { SinavTuru } from '../entities/sinav-turu.entity';
 import { CreateSinavTuruDto } from '../dtos/createSinavTuru.dto';
 import { UpdateSinavTuruDto } from '../dtos/updateSinavTuru.dto';
 
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+
+@UseGuards(JwtAuthGuard, RolesGuard) 
+@Roles('İnsan Kaynakları')
 @ApiTags('Sınav Türü')
 @Controller('sinav-turu')
 export class SinavTuruController {

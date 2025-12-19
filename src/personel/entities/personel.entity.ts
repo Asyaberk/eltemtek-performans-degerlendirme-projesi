@@ -11,6 +11,7 @@ import { Departman } from '../../departman/entities/departman.entity';
 import { Role } from '../../role/entities/role.entity';
 import { Sinav } from 'src/sinav/entities/sinav.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 
 @Entity('personel')
 export class Personel {
@@ -28,9 +29,9 @@ export class Personel {
   name: string; // Adı Soyadı (eski first_last_name)
 
   // Password, Auth modülünü kurarken eklenebilir ama şimdilik dursun
-  // @Exclude()
-  // @Column({ nullable: true } )
-  // password?: string;
+  @Exclude()
+  @Column({ nullable: true } )
+  password?: string;
 
   // --- DEPARTMAN  ---
   @ApiProperty()
