@@ -6,9 +6,9 @@ import { SoruAgirlik } from 'src/soru-agirlik/entities/soru-agirlik.entity';
 
 const ROLE_MAPPINGS: Record<string, string[]> = {
   'Şef': ['Teknik Şef', 'İdari Şef'],
-  'Müdür': ['Müdür', 'Müdür Teknik', 'Müdür İdari', 'Genel Müdür'],
+  'Müdür': ['Müdür', 'Genel Müdür'],
   'Direktör': ['Direktör'],
-  'İdari Personel': ['İdari Personel', 'Operatör', 'Avukat'],
+  'İdari Personel': ['İdari Personel', 'Operatör', 'Hukuk Müşaviri', 'Avukat'],
   'Koordinatör': ['Saha Koordinatörü', 'Proje Yöneticisi', 'Danışman'],
   'Teknik Personel': ['Teknik Personel'],
   'Uzman': ['Teknik Uzman', 'İdari Uzman'],

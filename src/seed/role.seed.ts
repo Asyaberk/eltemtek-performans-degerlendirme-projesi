@@ -5,8 +5,7 @@ import { Role } from 'src/role/entities/role.entity';
 const ROLES = [
   'Teknik Şef',
   'İdari Şef',
-  'Müdür Teknik',
-  'Müdür İdari',
+  'Müdür',
   'Genel Müdür',
   'Direktör',
   'Danışman',
@@ -20,6 +19,7 @@ const ROLES = [
   'İdari Personel',
   'Operatör',
   'Avukat',
+  'Hukuk Müşaviri',
 ];
 
 export async function seedRoles(app: INestApplicationContext) {

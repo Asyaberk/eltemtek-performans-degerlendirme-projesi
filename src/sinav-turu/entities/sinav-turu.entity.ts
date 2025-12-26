@@ -17,7 +17,7 @@ export class SinavTuru {
     description: 'Sınav türünün adı',
   })
   @Column({ unique: true, length: 100 })
-  name: string;
+  name: string
 
   // İlişki: Bu türe ait Sınavlar (One-to-Many)
   @ApiProperty({
