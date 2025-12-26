@@ -17,6 +17,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  seed:
+    build: .
+    command: >
+      sh -c "
+        npx ts-node -r tsconfig-paths/register src/seed/seed.ts
+      "
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+    networks: [nestjs-project-net]
   
   app:
     build:
@@ -34,7 +52,7 @@ services:
       - "${PORT}:${PORT}"
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
     volumes:
       - .:/app
       - /app/node_modules
