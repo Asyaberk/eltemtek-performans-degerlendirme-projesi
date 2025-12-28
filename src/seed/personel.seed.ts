@@ -5,6 +5,10 @@ import { join } from 'node:path';
 import { PersonelRepository } from '../personel/repository/personel.repository';
 import { DepartmanRepository } from '../departman/repository/departman.repository';
 import { RoleRepository } from '../role/repository/role.repository';
+import * as bcrypt from 'bcrypt';
+
+
+const DEFAULT_PASSWORD = '1';
 
 function get(row: any, key: string) {
   const found = Object.keys(row).find(
@@ -16,6 +20,8 @@ function get(row: any, key: string) {
 
 export async function seedPersoneller(app: INestApplicationContext) {
     console.log('Personel seed başlıyor...');
+
+    const hashedPassword = await bcrypt.hash(DEFAULT_PASSWORD, 10);
 
     const personelRepo = app.get(PersonelRepository);
     const departmanRepo = app.get(DepartmanRepository);
@@ -62,10 +68,11 @@ export async function seedPersoneller(app: INestApplicationContext) {
         }
 
         await personelRepo.create({
-            sicil_no: sicilNo,
-            name,
-            dept_id: departman.dept_id,
-            role_id: role.role_id,
+          sicil_no: sicilNo,
+          name,
+          password: hashedPassword,
+          dept_id: departman.dept_id,
+          role_id: role.role_id,
         });
 
         inserted++;

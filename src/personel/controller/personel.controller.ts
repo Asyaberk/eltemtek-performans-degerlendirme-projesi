@@ -10,8 +10,8 @@ import { RolesGuard } from 'src/guards/roles.guard';
 
 //We add these because the password field is automatically removed from the response.
 @UseInterceptors(ClassSerializerInterceptor)
-@UseGuards(JwtAuthGuard, RolesGuard) 
-@Roles('İnsan Kaynakları')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('İdari Şef', 'Müdür', 'Genel Müdür', 'Direktör')
 @ApiTags('Personel')
 @Controller('personel')
 export class PersonelController {

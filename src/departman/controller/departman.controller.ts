@@ -21,7 +21,7 @@ import { JwtAuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 
 @UseGuards(JwtAuthGuard, RolesGuard) 
-@Roles('İnsan Kaynakları')
+@Roles('İdari Şef', 'Müdür', 'Genel Müdür', 'Direktör')
 @Controller('departman')
 export class DepartmanController {
     constructor(private readonly departmanService: DepartmanService) { }

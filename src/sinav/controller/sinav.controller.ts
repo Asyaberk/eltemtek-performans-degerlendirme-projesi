@@ -9,8 +9,8 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/guards/auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 
-@UseGuards(JwtAuthGuard, RolesGuard) 
-@Roles('İnsan Kaynakları')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('İdari Şef', 'Müdür', 'Genel Müdür', 'Direktör')
 @ApiTags('Sınav')
 @Controller('sinav')
 export class SinavController {
