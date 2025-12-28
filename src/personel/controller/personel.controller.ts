@@ -83,7 +83,7 @@ export class PersonelController {
   @ApiParam({ name: 'id', example: 3, description: 'Personel ID' })
   @ApiResponse({ status: 200, description: 'Personel bulundu', type: Personel })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Personel> {
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<Personel> {
     return this.personelService.findOne(id);
   }
 
@@ -125,7 +125,7 @@ export class PersonelController {
   })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updatePersonelDto: UpdatePersonelDto,
   ): Promise<Personel> {
     return this.personelService.update(id, updatePersonelDto);
@@ -138,7 +138,7 @@ export class PersonelController {
   @ApiParam({ name: 'id', example: 5, description: 'Silinecek personel ID' })
   @ApiResponse({ status: 204, description: 'Personel silindi (no content)' })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: string): Promise<void> {
     await this.personelService.remove(id);
   }
 }

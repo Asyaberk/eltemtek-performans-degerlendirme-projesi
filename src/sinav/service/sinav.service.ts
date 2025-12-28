@@ -35,8 +35,8 @@ export class SinavService {
 
   // --- Yardımcı Fonksiyon: İlişki Varlık Kontrolü ---
   private async checkForeignKeys(
-    olan_id: number,
-    yapan_id: number,
+    olan_id: string,
+    yapan_id: string,
     tur_id: number,
   ): Promise<void> {
     // 1. Personel kontrolü
@@ -46,14 +46,14 @@ export class SinavService {
       );
     }
 
-    const olanPersonel = await this.personelRepository.findById(olan_id);
+    const olanPersonel = await this.personelRepository.findBySicilNo(olan_id);
     if (!olanPersonel) {
       throw new NotFoundException(
         `Değerlendirilen Personel (ID: ${olan_id}) bulunamadı.`,
       );
     }
 
-    const yapanPersonel = await this.personelRepository.findById(yapan_id);
+    const yapanPersonel = await this.personelRepository.findBySicilNo(yapan_id);
     if (!yapanPersonel) {
       throw new NotFoundException(
         `Değerlendiren Personel (ID: ${yapan_id}) bulunamadı.`,
@@ -126,7 +126,7 @@ export class SinavService {
     if (!sinav) {
       throw new NotFoundException(`Sınav (ID: ${sinav_id}) bulunamadı.`);
     }
-    const degerlendirilenPersonel = await this.personelRepository.findById(
+    const degerlendirilenPersonel = await this.personelRepository.findBySicilNo(
       sinav.sinav_olan_personel_id,
     );
 

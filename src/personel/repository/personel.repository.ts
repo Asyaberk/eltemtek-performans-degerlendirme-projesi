@@ -12,21 +12,13 @@ export class PersonelRepository {
 
   async findAll(): Promise<Personel[]> {
     return this.personelRepo.find({
-      relations: ['departman', 'role'], 
-    });
-  }
-
-
-  async findBySicilNo(sicil_no: string): Promise<Personel | null> {
-    return this.personelRepo.findOne({
-      where: { sicil_no },
       relations: ['departman', 'role'],
     });
   }
 
-  async findById(id: number): Promise<Personel | null> {
+  async findBySicilNo(sicil_no: string): Promise<Personel | null> {
     return this.personelRepo.findOne({
-      where: { id },
+      where: { sicil_no },
       relations: ['departman', 'role'],
     });
   }
@@ -36,13 +28,11 @@ export class PersonelRepository {
     return this.personelRepo.save(yeniPersonel);
   }
 
-
   async update(personel: Personel): Promise<Personel> {
     return this.personelRepo.save(personel);
   }
 
-
-  async delete(id: number): Promise<DeleteResult> {
-    return this.personelRepo.delete(id);
+  async delete(sicil_no: string): Promise<DeleteResult> {
+    return this.personelRepo.delete({ sicil_no });
   }
 }

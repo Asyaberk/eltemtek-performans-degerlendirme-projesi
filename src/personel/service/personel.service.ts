@@ -15,12 +15,15 @@ export class PersonelService {
     private readonly roleRepository: RoleRepository,
   ) {}
 
-  async findOne(id: number): Promise<Personel> {
-    const personel = await this.personelRepository.findById(id);
+  async findOne(sicil_no: string): Promise<Personel> {
+    const personel = await this.personelRepository.findBySicilNo(sicil_no);
 
     if (!personel) {
-      throw new NotFoundException(`Personel (ID: ${id}) bulunamadı.`);
+      throw new NotFoundException(
+        `Personel (Sicil No: ${sicil_no}) bulunamadı.`,
+      );
     }
+
     return personel;
   }
 
@@ -74,10 +77,10 @@ export class PersonelService {
   }
 
   async update(
-    id: number,
+    sicil_no: string,
     updatePersonelDto: UpdatePersonelDto,
   ): Promise<Personel> {
-    const personel = await this.findOne(id);
+    const personel = await this.findOne(sicil_no);
 
     if (updatePersonelDto.dept_id || updatePersonelDto.role_id) {
       await this.checkForeignKeys(
@@ -94,23 +97,23 @@ export class PersonelService {
       );
       delete updatePersonelDto['password'];
     }
-    
+
     Object.assign(personel, updatePersonelDto);
 
     return this.personelRepository.update(personel);
   }
 
-  async remove(id: number): Promise<{ message: string }> {
-    await this.findOne(id);
+  async remove(sicil_no: string): Promise<{ message: string }> {
+    await this.findOne(sicil_no);
 
-    const result = await this.personelRepository.delete(id);
+    const result = await this.personelRepository.delete(sicil_no);
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Personel (ID: ${id}) bulunamadı.`);
+      throw new NotFoundException(`Personel (ID: ${sicil_no}) bulunamadı.`);
     }
 
     return {
-      message: `Personel (ID: ${id}) başarıyla silindi.`,
+      message: `Personel (ID: ${sicil_no}) başarıyla silindi.`,
     };
   }
 }

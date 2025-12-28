@@ -31,7 +31,7 @@ export class Sinav {
   @JoinColumn({ name: 'sinav_olan_personel_id' })
   degerlendirilen_personel: Personel;
   @Column({ name: 'sinav_olan_personel_id' })
-  sinav_olan_personel_id: number;
+  sinav_olan_personel_id: string;
 
   // --- Değerlendirmeyi Yapan Personel  ---
   @ManyToOne(() => Personel, (personel) => personel.yaptigi_sinavlar, {
@@ -40,7 +40,7 @@ export class Sinav {
   @JoinColumn({ name: 'sinav_yapan_personel_id' })
   sinav_yapan_personel: Personel;
   @Column({ name: 'sinav_yapan_personel_id' })
-  yapan_personel_id: number;
+  yapan_personel_id: string;
 
   
   @ApiProperty({ example: false })
