@@ -11,13 +11,11 @@ export class CreateSinavDto {
   // --- FK'lar ---
   //Değerlendirilen Personel ID'si
   @IsString({ message: 'Değerlendirilen ID string olmalıdır.' })
-  @Min(1)
   @IsNotEmpty({ message: 'Değerlendirilen personel ID boş olamaz.' })
   sinav_olan_personel_id: string;
 
   //Değerlendirmeyi Yapan Personel ID'si
   @IsString({ message: 'Yapan ID string olmalıdır.' })
-  @Min(1)
   @IsNotEmpty({ message: 'Yapan personel ID boş olamaz.' })
   sinav_yapan_personel_id: string;
 

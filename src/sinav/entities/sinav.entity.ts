@@ -28,7 +28,10 @@ export class Sinav {
     (personel) => personel.degerlendirildigi_sinavlar,
     { nullable: false },
   )
-  @JoinColumn({ name: 'sinav_olan_personel_id' })
+  @JoinColumn({
+    name: 'sinav_olan_personel_id',
+    referencedColumnName: 'sicil_no',
+  })
   degerlendirilen_personel: Personel;
   @Column({ name: 'sinav_olan_personel_id' })
   sinav_olan_personel_id: string;
@@ -37,12 +40,14 @@ export class Sinav {
   @ManyToOne(() => Personel, (personel) => personel.yaptigi_sinavlar, {
     nullable: false,
   })
-  @JoinColumn({ name: 'sinav_yapan_personel_id' })
+  @JoinColumn({
+    name: 'sinav_yapan_personel_id',
+    referencedColumnName: 'sicil_no',
+  })
   sinav_yapan_personel: Personel;
   @Column({ name: 'sinav_yapan_personel_id' })
-  yapan_personel_id: string;
+  sinav_yapan_personel_id: string;
 
-  
   @ApiProperty({ example: false })
   @Column({ name: 'zorunlu_egitim' })
   zorunlu_egitim: boolean;

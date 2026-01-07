@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe, Delete, HttpCode, Put, UseGuards, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, HttpCode, Put, UseGuards, ClassSerializerInterceptor, UseInterceptors } from '@nestjs/common';
 import { PersonelService } from '../service/personel.service';
 import { Personel } from '../entities/personel.entity';
 import { CreatePersonelDto } from '../dtos/createPersonel.dto';
@@ -83,7 +83,7 @@ export class PersonelController {
   @ApiParam({ name: 'id', example: 3, description: 'Personel ID' })
   @ApiResponse({ status: 200, description: 'Personel bulundu', type: Personel })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
-  async findOne(@Param('id', ParseIntPipe) id: string): Promise<Personel> {
+  async findOne(@Param('id') id: string): Promise<Personel> {
     return this.personelService.findOne(id);
   }
 
@@ -125,7 +125,7 @@ export class PersonelController {
   })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
   async update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() updatePersonelDto: UpdatePersonelDto,
   ): Promise<Personel> {
     return this.personelService.update(id, updatePersonelDto);
@@ -138,7 +138,7 @@ export class PersonelController {
   @ApiParam({ name: 'id', example: 5, description: 'Silinecek personel ID' })
   @ApiResponse({ status: 204, description: 'Personel silindi (no content)' })
   @ApiResponse({ status: 404, description: 'Personel bulunamadı' })
-  async remove(@Param('id', ParseIntPipe) id: string): Promise<void> {
+  async remove(@Param('id') id: string): Promise<void> {
     await this.personelService.remove(id);
   }
 }

@@ -95,7 +95,7 @@ export class SinavService {
     ) {
       await this.checkForeignKeys(
         updateSinavDto.sinav_olan_personel_id || sinav.sinav_olan_personel_id,
-        updateSinavDto.sinav_yapan_personel_id || sinav.yapan_personel_id,
+        updateSinavDto.sinav_yapan_personel_id || sinav.sinav_yapan_personel_id,
         updateSinavDto.sinav_turu_id || sinav.sinav_turu_id,
       );
     }
